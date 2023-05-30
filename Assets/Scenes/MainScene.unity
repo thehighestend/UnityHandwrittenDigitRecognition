@@ -875,6 +875,7 @@ GameObject:
   - component: {fileID: 1217851420}
   - component: {fileID: 1217851422}
   - component: {fileID: 1217851421}
+  - component: {fileID: 1217851423}
   m_Layer: 5
   m_Name: Tablet
   m_TagString: Untagged
@@ -940,6 +941,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217851419}
   m_CullTransparentMesh: 1
+--- !u!114 &1217851423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217851419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec22ec20eaa3574ea8f90b93f9a5fb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onnx: {fileID: 0}
 --- !u!1 &1349379986
 GameObject:
   m_ObjectHideFlags: 0
