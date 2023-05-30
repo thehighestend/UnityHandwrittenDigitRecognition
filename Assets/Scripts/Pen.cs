@@ -10,6 +10,9 @@ public class Pen : MonoBehaviour
     [SerializeField] Transform _lineRoot;
     private Coroutine draw;
 
+    [Header("Tablet")]
+    [SerializeField] TabletManager _tablet;
+
     // Update is called once per frame
     void Update()
     {
