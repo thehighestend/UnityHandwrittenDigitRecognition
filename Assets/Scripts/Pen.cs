@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Pen : MonoBehaviour
 {
@@ -13,7 +15,8 @@ public class Pen : MonoBehaviour
     [Header("Tablet")]
     [SerializeField] TabletManager _tablet;
 
-    // Update is called once per frame
+    public Action _DrawCompleteCallback = null;
+
     void Update()
     {
         if(Input.GetMouseButtonDown(0))
@@ -26,8 +29,18 @@ public class Pen : MonoBehaviour
         }
     }
 
+    private void OnApplicationFocus(bool focus)
+    {
+        if(!focus)
+            StopDraw();
+    }
+
     void StartDraw()
     {
+        // Won't draw while clicking buttons
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if(draw != null)
         {
             StopCoroutine(draw);
@@ -55,6 +68,29 @@ public class Pen : MonoBehaviour
 
     void StopDraw()
     {
-        StopCoroutine(draw);
+        if (draw != null)
+        {
+            StopCoroutine(draw);
+        }
+
+        _DrawCompleteCallback?.Invoke();
+    }
+
+    public void Undo()
+    {
+        if(_lineRoot.childCount > 0)
+        {
+            Destroy(_lineRoot.GetChild(_lineRoot.childCount - 1).gameObject);
+        }
+    }
+
+    public void Clear()
+    {
+        var childCount = _lineRoot.childCount;
+        
+        for(int i = 0; i < childCount; i++)
+        {
+            Destroy(_lineRoot.GetChild(i).gameObject);
+        }
     }
 }
