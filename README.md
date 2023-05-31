@@ -1,2 +1,2 @@
 # UnityHandwrittenDigitRecognition
-Unity project for recognising hand-written digits
+Unity project for recognising hand-written digits (WIP)
