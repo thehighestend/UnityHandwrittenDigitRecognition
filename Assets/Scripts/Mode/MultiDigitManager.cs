@@ -47,7 +47,6 @@ public class MultiDigitManager : MonoBehaviour
             isFirstDigit = false;
         }
 
-        Debug.Log(_strBulider.ToString());
         _figures.text = _strBulider.ToString();
     }
 }
