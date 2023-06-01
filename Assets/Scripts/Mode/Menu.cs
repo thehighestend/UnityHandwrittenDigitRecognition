@@ -28,4 +28,9 @@ public class Menu : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    public void Credits()
+    {
+        Application.OpenURL("https://github.com/thehighestend");
+    }
 }
