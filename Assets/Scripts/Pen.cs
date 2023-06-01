@@ -12,9 +12,9 @@ public class Pen : MonoBehaviour
     [SerializeField] Transform _lineRoot;
     private Coroutine draw;
 
-    public Dictionary<int, Rect> _TabletAreaDic = new();
+    public Dictionary<int, Rect> TabletAreaDic = new();
 
-    public Action _DrawCompleteCallback = null;
+    public Action DrawCompleteCallback = null;
 
     void Update()
     {
@@ -54,7 +54,7 @@ public class Pen : MonoBehaviour
     private bool CheckPointerInsideTabletArea(Vector2 pointerPos)
     {
         bool isPointerOverTabletArea = false;
-        foreach (var rect in _TabletAreaDic.Values)
+        foreach (var rect in TabletAreaDic.Values)
         {
             if (rect.Contains(pointerPos))
             {
@@ -96,7 +96,7 @@ public class Pen : MonoBehaviour
             StopCoroutine(draw);
         }
 
-        _DrawCompleteCallback?.Invoke();
+        DrawCompleteCallback?.Invoke();
     }
 
     public void Undo()

@@ -16,12 +16,12 @@ public class PanelManager : MonoBehaviour
 
     private void Start()
     {
-        _tablet._postDetectionCallback += OnInferenceComplete;
+        _tablet.PostDetectionCallback += OnInferenceComplete;
     }
 
     private void OnDestroy()
     {
-        _tablet._postDetectionCallback -= OnInferenceComplete;
+        _tablet.PostDetectionCallback -= OnInferenceComplete;
     }
 
     private void OnInferenceComplete(int number)

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using TMPro;
@@ -17,12 +16,12 @@ public class MultiDigitManager : MonoBehaviour
 
     private void Start()
     {
-        _pen._DrawCompleteCallback += OnDrawComplete;
+        _pen.DrawCompleteCallback += OnDrawComplete;
     }
 
     private void OnDestroy()
     {
-        _pen._DrawCompleteCallback -= OnDrawComplete;
+        _pen.DrawCompleteCallback -= OnDrawComplete;
     }
 
     private void OnDrawComplete()

@@ -26,7 +26,7 @@ public class TabletManager : MonoBehaviour
     [SerializeField] bool _autoDetect = true;
 
     [HideInInspector] public int NumberSaved = -1;
-    public Action<int> _postDetectionCallback = null;
+    public Action<int> PostDetectionCallback = null;
 
     // Coroutine flag
     private WaitForEndOfFrame _wfEOF = new WaitForEndOfFrame();
@@ -36,14 +36,14 @@ public class TabletManager : MonoBehaviour
         _tabletSize = _tabletImageRT.sizeDelta;
         var tabletScreenPos = _mainCamera.WorldToScreenPoint(_tabletImageRT.position);
         _tabletRect = new Rect(tabletScreenPos.x, tabletScreenPos.y, _tabletSize.x, _tabletSize.y);
-        _pen._DrawCompleteCallback += Detect;
-        _pen._TabletAreaDic[gameObject.GetInstanceID()] = _tabletRect;
+        _pen.DrawCompleteCallback += Detect;
+        _pen.TabletAreaDic[gameObject.GetInstanceID()] = _tabletRect;
     }
 
     private void OnDestroy()
     {
-        _pen._DrawCompleteCallback -= Detect;
-        _pen._TabletAreaDic.Remove(gameObject.GetInstanceID());
+        _pen.DrawCompleteCallback -= Detect;
+        _pen.TabletAreaDic.Remove(gameObject.GetInstanceID());
     }
 
 #if UNITY_EDITOR_WIN
@@ -68,7 +68,7 @@ public class TabletManager : MonoBehaviour
         {
             var number = _inferenceManager.InferNumber(texture);
             NumberSaved = number;
-            _postDetectionCallback?.Invoke(number);
+            PostDetectionCallback?.Invoke(number);
         }));
     }
 
@@ -78,7 +78,7 @@ public class TabletManager : MonoBehaviour
         {
             var number = _inferenceManager.InferNumber(texture);
             NumberSaved = number;
-            _postDetectionCallback?.Invoke(number);
+            PostDetectionCallback?.Invoke(number);
         }));
     }
 
