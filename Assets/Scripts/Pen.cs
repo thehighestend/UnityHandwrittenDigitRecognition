@@ -12,18 +12,17 @@ public class Pen : MonoBehaviour
     [SerializeField] Transform _lineRoot;
     private Coroutine draw;
 
-    [Header("Tablet")]
-    [SerializeField] TabletManager _tablet;
+    public Dictionary<int, Rect> _TabletAreaDic = new();
 
     public Action _DrawCompleteCallback = null;
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             StartDraw();
         }
-        else if(Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))
         {
             StopDraw();
         }
@@ -31,7 +30,7 @@ public class Pen : MonoBehaviour
 
     private void OnApplicationFocus(bool focus)
     {
-        if(!focus)
+        if (!focus)
             StopDraw();
     }
 
@@ -41,12 +40,30 @@ public class Pen : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if(draw != null)
+        if (!CheckPointerInsideTabletArea(Input.mousePosition))
+            return;
+
+        if (draw != null)
         {
             StopCoroutine(draw);
         }
 
         draw = StartCoroutine(DrawLine());
+    }
+
+    private bool CheckPointerInsideTabletArea(Vector2 pointerPos)
+    {
+        bool isPointerOverTabletArea = false;
+        foreach (var rect in _TabletAreaDic.Values)
+        {
+            if (rect.Contains(pointerPos))
+            {
+                isPointerOverTabletArea |= true;
+                break;
+            }
+        }
+
+        return isPointerOverTabletArea;
     }
 
     IEnumerator DrawLine()
@@ -56,9 +73,15 @@ public class Pen : MonoBehaviour
         line.positionCount = 0;
         lineObj.SetActive(true);
 
-        while(true)
+        while (true)
         {
-            var pos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            var mousePos = Input.mousePosition;
+            if (!CheckPointerInsideTabletArea(mousePos))
+            {
+                yield break;
+            }
+
+            var pos = _mainCamera.ScreenToWorldPoint(mousePos);
             pos.z = 0;
             line.positionCount++;
             line.SetPosition(line.positionCount - 1, pos);
@@ -78,7 +101,7 @@ public class Pen : MonoBehaviour
 
     public void Undo()
     {
-        if(_lineRoot.childCount > 0)
+        if (_lineRoot.childCount > 0)
         {
             Destroy(_lineRoot.GetChild(_lineRoot.childCount - 1).gameObject);
         }
@@ -87,8 +110,8 @@ public class Pen : MonoBehaviour
     public void Clear()
     {
         var childCount = _lineRoot.childCount;
-        
-        for(int i = 0; i < childCount; i++)
+
+        for (int i = 0; i < childCount; i++)
         {
             Destroy(_lineRoot.GetChild(i).gameObject);
         }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using System.Text;
@@ -45,7 +42,7 @@ public class PanelManager : MonoBehaviour
 
     public void Backspace()
     {
-        if(_stringBuilder.Length > 0 )
+        if (_stringBuilder.Length > 0)
         {
             _stringBuilder.Remove(_stringBuilder.Length - 1, 1);
             UpdateLCD();
