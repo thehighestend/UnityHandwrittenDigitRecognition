@@ -2,8 +2,6 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 using UnityEngine;
-using Google.Protobuf.WellKnownTypes;
-using UnityEditor;
 
 public class TabletManager : MonoBehaviour
 {
